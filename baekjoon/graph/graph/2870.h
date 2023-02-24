@@ -67,20 +67,8 @@ void solution() {
 
 	sort(vec.begin(), vec.end(), [](const string& s1,const string& s2)
 		{
-			if (s1.size() < s2.size()) return true;
-			else if (s1.size() > s2.size()) return false;
-			else
-			{
-				for (int i = 0; i < s1.size(); ++i)
-				{
-					if (s1[i] < s2[i]) return true;
-					else if (s1[i] == s2[i]) {
-						if (i == s1.size() - 1) return false;
-						continue;
-					}
-					else return false;
-				}
-			}
+			if (s1.size() == s2.size()) return s1 < s2;
+			else return s1.size() < s2.size();
 		});
 	for (auto& e : vec) cout << e << '\n';
 	
