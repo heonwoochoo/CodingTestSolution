@@ -5,26 +5,22 @@
 
 using namespace std;
 
-int n;
-int score1 = 0;
-int score2 = 0;
-int curWin = 0;
-int first1T = 0;
-int second1T = 0;
-int res1 = 0;
-int res2 = 0;
-bool draw = true;
-int getSec(const string& st)
+int n, score1, score2, prev1, prev2, res1, res2;
+bool prevDraw = true;
+int minToSec(const string& st)
 {
-	string tmp{""};
-	vector<int> time;
-	for (auto& e : st)
-	{
-		if (e == ':') tmp = "";
-		else tmp += e;
-		if (tmp.size() == 2) time.emplace_back(stoi(tmp));
-	}
-	return time[0] * 60 + time[1];
+	return stoi(st.substr(0, 2))*60 + stoi(st.substr(3,2));
+}
+
+string secToMin(int second)
+{
+	string m = to_string(second / 60);
+	if (second / 60 < 10) m = "0" + m;
+
+	string s = to_string(second % 60);
+	if (second % 60 < 10) s = "0" + s;
+
+	return m + ":" + s;
 }
 
 void solution() {
@@ -39,68 +35,49 @@ void solution() {
 		int team;
 		string time;
 		cin >> team >> time;
-		int timeSec = getSec(time);
-		if (draw)
+		int timeSec = minToSec(time);
+
+		team == 1 ? score1++ : score2++;
+		
+		if (score1 == score2)
 		{
-			if (team == 1)
+			if (team == 2)
 			{
-				score1++;
-				curWin = 1;
-				first1T = timeSec;
+				res1 += timeSec - prev1;
 			}
 			else
 			{
-				score2++;
-				curWin = 2;
-				second1T = timeSec;
+				res2 += timeSec - prev2;
 			}
-			draw = false;
+			prevDraw = true;
 		}
-		
+		else if (score1 > score2)
+		{
+			if (prevDraw)
+			{
+				prev1 = timeSec;
+				prevDraw = false;
+			}
+		}
 		else
 		{
-			if (curWin == team && !draw) team == 1 ? score1++ : score2++;
-			else
+			if (prevDraw)
 			{
-				team == 1 ? score1++ : score2++;
-				if (score1 > score2)
-				{
-					res2 += (timeSec - first1T);
-					first1T = timeSec;
-					curWin = 1;
-				}
-				else if (score1 < score2)
-				{
-					res1 += (timeSec - second1T);
-					second1T = timeSec;
-					curWin = 2;
-				}
-				else
-				{
-					// 비기고 있을 때
-					draw = true;
-					if (team == 1)
-					{
-						first1T = timeSec;
-					}
-					else
-					{
-						second1T = timeSec;
-					}
-				}
+				prev2 = timeSec;
+				prevDraw = false;
 			}
 		}
 	}
-	if (curWin == 1 && !draw)
-	{
-		res1 += 2880 - first1T;
-	}
-	else if (curWin == 2 && !draw)
-	{
-		res2 += 2880 - second1T;
-	}
 	
-	cout << res1 << " " << res2;
-	// 출력 : 첫번째, 두번째 팀이 이기고 있던 시간
+	if (score1 > score2)
+	{
+		res1 += 2880 - prev1;
+	}
+	else if (score2 > score1)
+	{
+		res2 += 2880 - prev2;
+	}
+
+	cout << secToMin(res1) << '\n' << secToMin(res2);
 }
 
