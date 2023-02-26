@@ -27,10 +27,7 @@ void solution() {
 	for (auto& e : mp) vec.push_back({ e.first, e.second });
 	
 	sort(vec.begin(), vec.end(), [](pair<int, int> a, pair<int, int> b) {
-		if (a.second == b.second)
-		{
-			return find(f.begin(), f.end(), a.first) < find(f.begin(), f.end(), b.first);
-		}
+		if (a.second == b.second) return find(f.begin(), f.end(), a.first) < find(f.begin(), f.end(), b.first);
 		else return a.second > b.second;
 		});
 
