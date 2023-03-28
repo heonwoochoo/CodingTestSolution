@@ -1,4 +1,4 @@
-#include "1325.h"
+#include "17298.h"
 int main()
 {
 	solution();

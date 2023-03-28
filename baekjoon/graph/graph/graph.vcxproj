@@ -138,6 +138,7 @@
     <ClInclude Include="1325.h" />
     <ClInclude Include="1436.h" />
     <ClInclude Include="14502.h" />
+    <ClInclude Include="17298.h" />
     <ClInclude Include="1992.h" />
     <ClInclude Include="2178.h" />
     <ClInclude Include="2468.h" />
