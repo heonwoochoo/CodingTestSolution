@@ -130,6 +130,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="12869.h" />
     <ClInclude Include="15686.h" />
     <ClInclude Include="16234.h" />
     <ClInclude Include="2589.h" />
